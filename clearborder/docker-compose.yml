@@ -1,0 +1,49 @@
+# ClearBorder - Développement local (PostgreSQL)
+# Sur Mac : OrbStack recommandé (plus léger que Docker Desktop)
+# Usage: docker compose up
+# API: http://localhost:8000  |  Dashboard: http://localhost:8501
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: clearborder
+      POSTGRES_PASSWORD: clearborder
+      POSTGRES_DB: clearborder
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clearborder -d clearborder"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=postgresql://clearborder:clearborder@postgres:5432/clearborder
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  dashboard:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/app
+    environment:
+      - API_BASE=http://api:8000/api/v1
+    command: streamlit run dashboard/app.py --server.port 8501 --server.address 0.0.0.0
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:

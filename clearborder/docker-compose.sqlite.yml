@@ -1,0 +1,26 @@
+# ClearBorder — Mode SQLite uniquement (sans PostgreSQL)
+# Usage: docker compose -f docker-compose.sqlite.yml up
+# Plus léger, démarrage rapide. Pour dev sans postgres.
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=sqlite:///./clearborder.db
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  dashboard:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/app
+    environment:
+      - API_BASE=http://api:8000/api/v1
+    command: streamlit run dashboard/app.py --server.port 8501 --server.address 0.0.0.0
+    depends_on:
+      - api

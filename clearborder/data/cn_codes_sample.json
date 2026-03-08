@@ -1,0 +1,16 @@
+[
+  {"code": "7208", "description": "Plaques, feuilles et bandes en fer ou acier, laminées à chaud"},
+  {"code": "7209", "description": "Plaques, feuilles et bandes en fer ou acier, laminées à froid"},
+  {"code": "7210", "description": "Plaques et bandes en fer ou acier, plaquées ou revêtues"},
+  {"code": "7306", "description": "Tubes et profilés creux en fer ou acier, soudés"},
+  {"code": "7308", "description": "Constructions et parties de constructions en fer ou acier"},
+  {"code": "7606", "description": "Plaques, feuilles et bandes en aluminium"},
+  {"code": "7607", "description": "Feuilles et bandes en aluminium, d'une épaisseur > 0,2 mm"},
+  {"code": "2523", "description": "Ciments Portland, ciments aluminieux, ciments de laitier"},
+  {"code": "3102", "description": "Engrais azotés minéraux ou chimiques"},
+  {"code": "3105", "description": "Engrais minéraux ou chimiques contenant azote, phosphore et potassium"},
+  {"code": "7201", "description": "Fonte brute"},
+  {"code": "7204", "description": "Déchets et débris de fer ou d'acier"},
+  {"code": "7213", "description": "Barres et profilés en fer ou acier, simplement laminés"},
+  {"code": "7214", "description": "Barres et profilés en fer ou acier, forgés ou laminés"}
+]
