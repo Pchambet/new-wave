@@ -6,6 +6,7 @@ name: Deploy to Cloud Run
 on:
   push:
     branches: [main, master]
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -16,6 +17,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check secrets
+        run: |
+          if [ -z "${{ secrets.GCP_SA_KEY }}" ]; then
+            echo "::error::GCP_SA_KEY manquant. Settings > Secrets > New repository secret"
+            exit 1
+          fi
+          if [ -z "${{ secrets.GCP_PROJECT_ID }}" ]; then
+            echo "::error::GCP_PROJECT_ID manquant"
+            exit 1
+          fi
+          echo "Secrets OK"
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
